@@ -14,7 +14,7 @@ export const XAI_BASE_URL = 'https://api.x.ai/v1'
 /** DashScope root: images ride /api/v1/services/aigc/..., understanding rides /compatible-mode/v1 */
 export const DASHSCOPE_BASE_URL = 'https://dashscope.aliyuncs.com'
 export const MINIMAX_BASE_URL = 'https://api.minimax.io/v1'
-export const STABILITY_BASE_URL = 'https://api.stability.ai'
+export const STABILITY_BASE_URL = 'https://stability.comfy.org'
 export const BFL_BASE_URL = 'https://api.bfl.ai'
 /** DeepSeek's OpenAI-compatible root; the Vision + Files API live at https://api.deepseek.com */
 export const DEEPSEEK_MEDIA_BASE_URL = 'https://api.deepseek.com/v1'
@@ -199,8 +199,8 @@ export const AI_MEDIA_PROVIDERS: AiMediaProviderMeta[] = [
   {
     id: 'stability',
     label: 'Stability AI',
-    description: 'Stable Image Ultra/Core and Stable Diffusion 3.5 through the Stability REST API',
-    keyPlaceholder: 'sk-...',
+    description: 'Stable Image Ultra/Core and Stable Diffusion 3.5 through Comfy',
+    keyPlaceholder: 'comfyui-...',
     defaultBaseUrl: STABILITY_BASE_URL,
     imageProtocol: 'stability',
     // per docs.stability.ai 2026-11-02: generation lives at

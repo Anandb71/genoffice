@@ -330,6 +330,8 @@ Keenable, Exa or Firecrawl for web search, and OpenAI, Gemini, Doubao/Seedream, 
 Qwen, MiniMax, Stability, FLUX or any OpenAI-compatible images endpoint for image
 generation and image/video analysis, plus DeepSeek V4.1 Flash for image analysis.
 
+Stability image generation uses Comfy by default. Use a [Comfy API key](https://platform.comfy.org/profile/api-keys) with credits in the same workspace. Existing Stability keys do not work on Comfy. The optional provider base URL still supports custom endpoints; `https://api.stability.ai` with a matching Stability key is a temporary option until image and 3D APIs leave Stability on December 10, 2026 ([notice](https://kb.stability.ai/knowledge-base/transitioning-stability-ai-image-3d-api-endpoints-to-comfyui), [supported routes](https://comfy.org/stability/)). Explicitly saved base URLs are preserved and need to be updated when switching. This integration uses the supported Core, Ultra and SD3.5 generation routes, one image per request.
+
 **TypeSafe Jev** reranks the home screen's file search. Under **AI Media & Search →
 Local file search**, switch on Jev search reranking and pick an endpoint:
 [OpenRouter](https://openrouter.ai/typesafe) (model `typesafe/jev-1.13`) or

@@ -924,8 +924,9 @@ describe('generateImageWithProvider (stability & bfl)', () => {
     })
     expect(out.mime).toBe('image/png')
     const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit]
-    expect(url).toBe('https://api.stability.ai/v2beta/stable-image/generate/ultra')
+    expect(url).toBe('https://stability.comfy.org/v2beta/stable-image/generate/ultra')
     expect((init.headers as Record<string, string>).Accept).toBe('image/*')
+    expect((init.headers as Record<string, string>).Authorization).toBe('Bearer k')
     const form = init.body as FormData
     expect(form.get('prompt')).toBe('a fox')
     expect(form.get('output_format')).toBe('png')
@@ -938,12 +939,26 @@ describe('generateImageWithProvider (stability & bfl)', () => {
     vi.stubGlobal('fetch', fetchMock)
     await generateImageWithProvider('stability', cfg('sd3.5-large'), { prompt: 'a fox' })
     const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit]
-    expect(url).toBe('https://api.stability.ai/v2beta/stable-image/generate/sd3')
+    expect(url).toBe('https://stability.comfy.org/v2beta/stable-image/generate/sd3')
     expect((init.body as FormData).get('model')).toBe('sd3.5-large')
     await expect(
       generateImageWithProvider('stability', cfg('sd-1.x'), { prompt: 'x' }),
     ).rejects.toThrow(/Unknown Stability/)
   })
+
+  it.each(['https://api.stability.ai/', 'https://images.example.test/proxy/'])(
+    'Stability: keeps an explicit base URL %s',
+    async (baseUrl) => {
+      const fetchMock = vi.fn(async () => pngResponse())
+      vi.stubGlobal('fetch', fetchMock)
+      await generateImageWithProvider('stability', cfg('stable-image-core', baseUrl), {
+        prompt: 'a fox',
+      })
+      const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit]
+      expect(url).toBe(`${baseUrl}v2beta/stable-image/generate/core`)
+      expect((init.headers as Record<string, string>).Authorization).toBe('Bearer k')
+    },
+  )
 
   it('BFL: submit, poll to Ready, download the sample', async () => {
     const fetchMock = vi.fn(async (url: string) =>
